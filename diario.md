@@ -20,3 +20,13 @@ Hoy trabaje para dejar preparado el entorno base para el LFS
   -Corregir el deteccion de "Id"
   -Reejutar el script hasta que todas las herramientas aparezcan como instaladas
   -Luego continualr con la creacion de usuario LFS
+
+
+### 24 de Octube del 2025
+### Avance: Terminar el entorno del host
+Seguimos configurando y dejando preparado el entorno
+1 **Mejorar el spcrip para verificar las herramientas**
+  -Mejore el scrpit de verificacion de versiones de las herramientas necesarias con un tiempo de espera 
+
+4 **Problemas encontrados**
+ -No encontro Id y coreutils
