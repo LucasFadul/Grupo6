@@ -38,3 +38,29 @@ Comprobar que el sistema anfitrion cumpla con todos los requisitos para construi
  -Todas las herramientas esenciales (bash,gcc,make,coreutils,etc) se encuentran en versiones superiores a las requeridas por el libro
  -Se verifico que el kernel soporta UNIX98 PTY y que el compilador g++ funciona correctamente
  -El entorno anfitrion quedo completamente preparado para continuar con la siguiente etapa del proyecto LFS.
+
+ ### 25 de Octubre del 2025
+ ### Avance: Creacion de la particion y montaje del entorno LFS
+ Hoy continue con al preparacion del entorno del sistema anfitrion, siguiendo las indicaciones del CAP. 2.4 del libro LFS. EL objetivo fue crear y montar la particion donde se construira el sistema LFS
+**Creacion del nuevo disco**
+-Agregue un segundo disco virtual de 25 GB en VirtuaBox, con almacenamiento dinamico tipo VDI, para evitar ocupar espacio fisico innecesario en el host.
+-El nuevo disco fue detectado dentro del sistema como /dev/sdb
+
+**Particiones del disco**
+-Utilice la herramienta fdisk para crear una nueva tabla de particiones y una particion primaria que ocupe todo el disco
+-Comandos utilizados: 
+* sudo fdisk /dev/sdb
+* n -> p -> Entern -> Enter -> w
+-Luego de guardar los cammbios, verifica la particion mediante lsblk confirmando la creacion de /dev/sda1
+
+**Formateo y montaje del sistema de archivos**
+-Formatee la particion con ext4 utilizando:
+* sudo mkfs -v -t ext4 /dev/sda1
+-Cree el punto de montaje y monte la particion:
+* sudo mkdir -pv /mnt/lfs
+* sudo mount -v -t ext4 /dev/sda1 /mnt/lfs
+-El sistema mostro una advertencia relacionada con SELinux labels, la cual no afecta al proceso LFS
+Confirme el montaje ejecutando:
+* df -h | grep lfs
+
+
