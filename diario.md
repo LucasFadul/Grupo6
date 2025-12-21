@@ -63,4 +63,30 @@ Comprobar que el sistema anfitrion cumpla con todos los requisitos para construi
 Confirme el montaje ejecutando:
 * df -h | grep lfs
 
+### 20 de Diciembre del 2025
+### Avance: Reconstruccion del Host y Preparacion del entorno LFS 2.0
+Debido a una falla critica en la VM anterior, nos vimos en la necesidad de realizar el proyecto desde cero. Permitiendonos corregir el hardware para mayor eficiencia y aplicar la experencia previa para optimizar la instalacion del sistema anfitrion
+**Configuracion de Hardware**
+- Se instalo Rocky Linux 10.0 en una nueva VM de VirtualBox
+- Se ajustaron los recursos para cumplir con los requisitos minimos del TP: 8 GB de RAM y 4 nucleos de CPU
+- Se configuraron dos unidades de almacenamiento: un disco de 40 GB para el sistema host y un segudno disco virtual de 25 GB (VDI) dedicado exclusivamente al sistema LFS
+
+**Preparacion del software anfitrion**
+- Habilitacion de repositorios: Se activo el repositorio CRB, esencial en Rocky 10 para las herramientoas de desarrollo
+- Instalacion de dependencias: Se instalo el grupo Development Tools y los paquetes texinfo, patch y bison
+- Validacion: Se ejecuto el script version-check.sh del libro LFS 12.4 para garantizar un entorno de compilacion eficiente
+- Enlaces simbolicos: Se crearon manualmente los enlaces /usr/bin/yacc -> /usr/bin/bison y /bin/sh -> /bin/bash para cumplir con los estandares del manual
+
+**Estructura de directorios y seguridad**
+- Se creo la jerarquia inicial de carpetas en el punto de montaje (/usr, /bin, /lib, /sbin, /etc, /var, /tools)
+- Se configuraron los enlaces simbolicos de 64 bits para asegurar la compatibilidad de la arquitectura
+- Usuario LFS: Se creo el usuario y grupo lfs para realizar la compilacion sin privilegios de root, protegiendo la integridad del host
+- Se transfirio la propiedad de todos los directorios en $LFS al usuario lfs
+
+**Problemas encontrados y soluciones**
+- Repositorio CRB y lo vacio del host "minimal":
+    Al ejecutar el script de validacion de herramientas en el nuevo anfitrion Rocky Linux 10, detectamos una ausencia critica de paquetes esenciales como texinfo, patch y bison. En esta version de Rocky, estas herramientas de desarrollo no se encuentran en los repositorios estandar por defecto
+    *Solucion*: Activamos el repositorio CRB mediante el gestor de paquetes dnf. Una vez activo, pudimos satisfacer las dependencias exigidas por el manual LFS 12.4, asegurarndo que el sistema sea capaz de generar la documentacion y aplicar parches durante la compilacion de la cadena de herramientas
+
+
 
