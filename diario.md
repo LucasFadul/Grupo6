@@ -112,8 +112,27 @@ Se completo la descarga y verificacion de los aprox. 90 archivos (paquetes base 
   La descarga directa en la máquina virtual para paquetes de gran volumen (GCC, Python, Glibc) presentaba tiempos de espera ineficientes y riesgos de desconexión.
   *Solucion*: Implementamos una estrategia de transferencia híbrida utilizando WinSCP. Descargamos los paquetes pesados en el sistema anfitrión y los transferimos por SFTP, asegurando la propiedad de los archivos mediante chown lfs:lfs para evitar conflictos de permisos posteriores.
 
-    
 
+### 22 de Diciembre del 2025
+### Avance: Vinculacion de entorno y preparacion para el cap 5
+El dia de hoy buscamos dejar el terreno listo. El objetivo fue que la MV y el disco externo se entendieran bien para que el usuario lfs pueda trabajar tranquilo sin romper el sistema principal
+
+**El puente de /tools**
+-Creacion de un enlace simbolico de /tools hacia mi disco externo (/mnt/lfs/tools). Esto es clave porque el manual pide que todo se instale en /tools, pero necesitamos que los archivos fisicamente se almacenen em el disco de 25GB y no en el de la VM
+
+**Configuracion del usuario lfs** 
+-Preparacion de los archivos .bash_profile y .bashrc. Ahora cada vez que se ingresa con su - lfs, el sistema ya sabe que la ruta es /mnt/lfs y el compilador usa un entorno limpio, para que no se mezcle nada del Rocky Linux con lo que se construira
+
+**Permisos**
+-Asignacion de propiedad a la carpeta tools al usuario lfs. Si este paso, cuando se quisiera instalar Binultis saltaria error
+
+**Problemas y soluciones**
+-Enlace roto: Si se reinicia la VM y no se monta el disco externo primero, el enlace /tools no serviria de nada
+  *Solucion*: Primero montar el disco sbd1 y recien ahi entrar como usuario cosntructor 
+
+-Espacio de memoria: Activacion de la particion Swap del disco externo por la dudas. Los compiladores como GCC exigen mucha RAM y se busca que la VM no se cuelgue a la mitad del proceso
+
+### 06 de Enero del 2026
 
 
 
