@@ -118,16 +118,16 @@ Se completo la descarga y verificacion de los aprox. 90 archivos (paquetes base 
 El dia de hoy buscamos dejar el terreno listo. El objetivo fue que la MV y el disco externo se entendieran bien para que el usuario lfs pueda trabajar tranquilo sin romper el sistema principal
 
 **El puente de /tools**
--Creacion de un enlace simbolico de /tools hacia mi disco externo (/mnt/lfs/tools). Esto es clave porque el manual pide que todo se instale en /tools, pero necesitamos que los archivos fisicamente se almacenen em el disco de 25GB y no en el de la VM
+- Creacion de un enlace simbolico de /tools hacia mi disco externo (/mnt/lfs/tools). Esto es clave porque el manual pide que todo se instale en /tools, pero necesitamos que los archivos fisicamente se almacenen em el disco de 25GB y no en el de la VM
 
 **Configuracion del usuario lfs** 
--Preparacion de los archivos .bash_profile y .bashrc. Ahora cada vez que se ingresa con su - lfs, el sistema ya sabe que la ruta es /mnt/lfs y el compilador usa un entorno limpio, para que no se mezcle nada del Rocky Linux con lo que se construira
+- Preparacion de los archivos .bash_profile y .bashrc. Ahora cada vez que se ingresa con su - lfs, el sistema ya sabe que la ruta es /mnt/lfs y el compilador usa un entorno limpio, para que no se mezcle nada del Rocky Linux con lo que se construira
 
 **Permisos**
--Asignacion de propiedad a la carpeta tools al usuario lfs. Si este paso, cuando se quisiera instalar Binultis saltaria error
+- Asignacion de propiedad a la carpeta tools al usuario lfs. Si este paso, cuando se quisiera instalar Binultis saltaria error
 
 **Problemas y soluciones**
--Enlace roto: Si se reinicia la VM y no se monta el disco externo primero, el enlace /tools no serviria de nada
+- Enlace roto: Si se reinicia la VM y no se monta el disco externo primero, el enlace /tools no serviria de nada
   *Solucion*: Primero montar el disco sbd1 y recien ahi entrar como usuario cosntructor 
 
 -Espacio de memoria: Activacion de la particion Swap del disco externo por la dudas. Los compiladores como GCC exigen mucha RAM y se busca que la VM no se cuelgue a la mitad del proceso
@@ -137,19 +137,19 @@ El dia de hoy buscamos dejar el terreno listo. El objetivo fue que la MV y el di
 El objetivo de hoy fue llenar /usr/bin del nuevo sistema con las utilidades esenciales. Ya pasamos la fase mas pesada de compilacion (GCC, Flibc) y entramos en la fase de herramiebtas de usuario
 
 **Binario de sistema**
--Instalacion exitosa de Bash y Corenutils. Con esto, el sistema LFS ya tiene su propia terminal y comandos basicos de archivos (ls, cp, mv)
+- Instalacion exitosa de Bash y Corenutils. Con esto, el sistema LFS ya tiene su propia terminal y comandos basicos de archivos (ls, cp, mv)
 
 **Verificacion de Ejecutables**
--Se comprobo mediante el comando file que los binarios estan correctamente vinculados al interprete de LFS y no la del host 
+- Se comprobo mediante el comando file que los binarios estan correctamente vinculados al interprete de LFS y no la del host 
 
 **Compilacion cruzada**
--Ìnstalacion de herramientas de soporte como M4, Ncuses y file. Se aplico un metodo de compilacion doble para file, creando una version nativa temporal para poder compilar la version del target
+- Instalacion de herramientas de soporte como M4, Ncuses y file. Se aplico un metodo de compilacion doble para file, creando una version nativa temporal para poder compilar la version del target
 
 **Problemas y Soluciones**
--Error de Enlace en Bash: Al intentar crear el enlace simbólico /usr/bin/sh, el sistema arrojó "File exists".
+- Error de Enlace en Bash: Al intentar crear el enlace simbólico /usr/bin/sh, el sistema arrojó "File exists".
   *Solucion*: Uso de ln -sfv para forzar la creación del enlace apuntando a bash
 
--Bloqueo en Diffutils: El script configure aborta con un error. Esto sucede porque el paquete intenta ejecutar pruebas de funciones que son incompatibles con la arquitectura del host durante la construcción.
+- Bloqueo en Diffutils: El script configure aborta con un error. Esto sucede porque el paquete intenta ejecutar pruebas de funciones que son incompatibles con la arquitectura del host durante la construcción.
   *Estado*: Pendiente a solucionarlo
 
 
