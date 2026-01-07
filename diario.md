@@ -128,9 +128,9 @@ El dia de hoy buscamos dejar el terreno listo. El objetivo fue que la MV y el di
 
 **Problemas y soluciones**
 - Enlace roto: Si se reinicia la VM y no se monta el disco externo primero, el enlace /tools no serviria de nada
-  *Solucion*: Primero montar el disco sbd1 y recien ahi entrar como usuario cosntructor 
+  - *Solucion*: Primero montar el disco sbd1 y recien ahi entrar como usuario cosntructor 
 
--Espacio de memoria: Activacion de la particion Swap del disco externo por la dudas. Los compiladores como GCC exigen mucha RAM y se busca que la VM no se cuelgue a la mitad del proceso
+- Espacio de memoria: Activacion de la particion Swap del disco externo por la dudas. Los compiladores como GCC exigen mucha RAM y se busca que la VM no se cuelgue a la mitad del proceso
 
 ### 06 de Enero del 2026
 ### Avance: Compilacion de herramientas basicas del cap 5 y problemas en diffutils
@@ -150,6 +150,6 @@ El objetivo de hoy fue llenar /usr/bin del nuevo sistema con las utilidades esen
   *Solucion*: Uso de ln -sfv para forzar la creación del enlace apuntando a bash
 
 - Bloqueo en Diffutils: El script configure aborta con un error. Esto sucede porque el paquete intenta ejecutar pruebas de funciones que son incompatibles con la arquitectura del host durante la construcción.
-  *Estado*: Pendiente a solucionarlo
+  - *Estado*: Pendiente a solucionarlo
 
 
