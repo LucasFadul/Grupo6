@@ -26,40 +26,40 @@ Hoy trabaje para dejar preparado el entorno base para el LFS
 ### Avance: Terminar el entorno del host
 Comprobar que el sistema anfitrion cumpla con todos los requisitos para construir el entorno LFS
 **Cambios en el script y preparacion de entorno hostNo **
- -Tome la decicion de crear el script version-check.sh basado en el codigo del libro y no usar el anteriormente optimizado por la IA, este con el fin de verificar las versiones minimas de las herramientas criticas del sistema
- -Se ejecuto el script y se analizaron los resultados 
- -Se corrigeron las advertencias relacionadas con Texinfo y yacc instalando el paquete correspondiente y asegurando compatibilidad con Bison
+- Tome la decicion de crear el script version-check.sh basado en el codigo del libro y no usar el anteriormente optimizado por la IA, este con el fin de verificar las versiones minimas de las herramientas criticas del sistema
+- Se ejecuto el script y se analizaron los resultados 
+- Se corrigeron las advertencias relacionadas con Texinfo y yacc instalando el paquete correspondiente y asegurando compatibilidad con Bison
 
  **Problemas encontrado**
- -El paquete Texinfo no estaba disponible inicialmente en los repositorios principales de Rocky Linux, por lo que fue necesario habilitar el repositorio CRB (CodeReady Builder) antes de poder instalarlo correctamente 
- -El comando yacc ya existia como binario independiente (no como enlace), lo que impidio crear el vinculo simbolico directamente hacia bison. Para resolverlo, elimine el binario anterior y cree un nuevo enlace simbolico que apunta a bison, dejando el entorno correctamente configurado como en el libor
+- El paquete Texinfo no estaba disponible inicialmente en los repositorios principales de Rocky Linux, por lo que fue necesario habilitar el repositorio CRB (CodeReady Builder) antes de poder instalarlo correctamente 
+- El comando yacc ya existia como binario independiente (no como enlace), lo que impidio crear el vinculo simbolico directamente hacia bison. Para resolverlo, elimine el binario anterior y cree un nuevo enlace simbolico que apunta a bison, dejando el entorno correctamente configurado como en el libor
 
  **Resultados**
- -Todas las herramientas esenciales (bash,gcc,make,coreutils,etc) se encuentran en versiones superiores a las requeridas por el libro
- -Se verifico que el kernel soporta UNIX98 PTY y que el compilador g++ funciona correctamente
- -El entorno anfitrion quedo completamente preparado para continuar con la siguiente etapa del proyecto LFS.
+- Todas las herramientas esenciales (bash,gcc,make,coreutils,etc) se encuentran en versiones superiores a las requeridas por el libro
+- Se verifico que el kernel soporta UNIX98 PTY y que el compilador g++ funciona correctamente
+- El entorno anfitrion quedo completamente preparado para continuar con la siguiente etapa del proyecto LFS.
 
  ### 25 de Octubre del 2025
  ### Avance: Creacion de la particion y montaje del entorno LFS
  Hoy continue con al preparacion del entorno del sistema anfitrion, siguiendo las indicaciones del CAP. 2.4 del libro LFS. EL objetivo fue crear y montar la particion donde se construira el sistema LFS
 **Creacion del nuevo disco**
--Agregue un segundo disco virtual de 25 GB en VirtuaBox, con almacenamiento dinamico tipo VDI, para evitar ocupar espacio fisico innecesario en el host.
--El nuevo disco fue detectado dentro del sistema como /dev/sdb
+- Agregue un segundo disco virtual de 25 GB en VirtuaBox, con almacenamiento dinamico tipo VDI, para evitar ocupar espacio fisico innecesario en el host.
+- El nuevo disco fue detectado dentro del sistema como /dev/sdb
 
 **Particiones del disco**
--Utilice la herramienta fdisk para crear una nueva tabla de particiones y una particion primaria que ocupe todo el disco
--Comandos utilizados: 
+- Utilice la herramienta fdisk para crear una nueva tabla de particiones y una particion primaria que ocupe todo el disco
+- Comandos utilizados: 
 * sudo fdisk /dev/sdb
 * n -> p -> Entern -> Enter -> w
--Luego de guardar los cammbios, verifica la particion mediante lsblk confirmando la creacion de /dev/sda1
+- Luego de guardar los cammbios, verifica la particion mediante lsblk confirmando la creacion de /dev/sda1
 
 **Formateo y montaje del sistema de archivos**
--Formatee la particion con ext4 utilizando:
+- Formatee la particion con ext4 utilizando:
 * sudo mkfs -v -t ext4 /dev/sda1
--Cree el punto de montaje y monte la particion:
+- Cree el punto de montaje y monte la particion:
 * sudo mkdir -pv /mnt/lfs
 * sudo mount -v -t ext4 /dev/sda1 /mnt/lfs
--El sistema mostro una advertencia relacionada con SELinux labels, la cual no afecta al proceso LFS
+- El sistema mostro una advertencia relacionada con SELinux labels, la cual no afecta al proceso LFS
 Confirme el montaje ejecutando:
 * df -h | grep lfs
 
