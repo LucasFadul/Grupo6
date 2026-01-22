@@ -153,3 +153,26 @@ El objetivo de hoy fue llenar /usr/bin del nuevo sistema con las utilidades esen
   - *Estado*: Pendiente a solucionarlo
 
 
+### 21 de enero 2026
+### Avance: Finalizacion del Toolchain, Chroot y herramientas criticas
+El objetivo de hoy fue terminar la cadena de herramientas temporal, aislar el sistema dentro del entorno Chroot y dejar listas las utilidades de lenguaje para la construccion final
+
+**Aislamiento del sistema (toolchain)**
+- Compilacion de Binutils y gcc fase 2 configurados con --with-sysroot. Esto garantiza que el enlazador busque librerias en /mnt/lfs y no en el host.
+
+**Configuracion de Entorno (Chroot)**
+- Creacion de la jerarquia de directorios, usuarios root y archivos de configuracion basicos (passwd, group). Se montaron los sistemas virtuales (/dev, /proc) para hacer funcional el entorno
+
+**Herrasmientas de lenguaje**
+- Instalacion exitosa de Perl y de Python dentro del chroot. Se verifico que texinfo y util-linux compilaran correctamente tras resolver dependencias
+
+**Problemas y soluciones**
+- Borrado accidental de archivos: Se elimino el .tar.xz de Python por errror antes de compilar
+  *Solucion*: Descargar mediante wget desde el host hacia la carpeta de fuentes montadas
+
+- Bloqueo de Terminal (PTY): Perdida de acceso a sudo por mal montaje de /dev/pts
+  *Solucion*: Script de montaje secuencial para restaurar la conectividad del chroot
+
+-Error en Util-linux: Fallo en configure por flag --static obsoleto y falta de sqlite3 para liblastlog2
+  *Solucion*: Se desactivo la libreria conflictiva y se removio el flag incompatible en la configuracion
+
