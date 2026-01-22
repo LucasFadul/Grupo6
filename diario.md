@@ -93,22 +93,22 @@ Debido a una falla critica en la VM anterior, nos vimos en la necesidad de reali
 Se completo la descarga y verificacion de los aprox. 90 archivos (paquetes base y parche) requeridos por el manual LFS 12.4. Este dia nos centramos en optimizar las descargas y la depuracion del entorno para asegurar que la "materia prima" del sistema sea exacta y no presente corrupciones
 
 **Descargas y eficiencia aplicada**
--Para maximizar el tiempo, se utilizo una estrategia hibrida:
-  -WinSCP: Se utilizo para trasferir los paquetes mas pesados (como gcc-13.2.0.tar.xz de 84 MB) desde el sistema anfitrion.
+- Para maximizar el tiempo, se utilizo una estrategia hibrida:
+  - WinSCP: Se utilizo para trasferir los paquetes mas pesados (como gcc-13.2.0.tar.xz de 84 MB) desde el sistema anfitrion.
   Esto evito saturar la conexion de la maquina virtual y permitio usar gestores de descargas mas rapidos en Windows
 
-  -Wget-list:Se automatizo la descarga de parches y paquetes ligeros mediante el uso de las listas oficiales wget-list y wget-list-patches directamente en la terminal de linux
+  - Wget-list:Se automatizo la descarga de parches y paquetes ligeros mediante el uso de las listas oficiales wget-list y wget-list-patches directamente en la terminal de linux
 
 **Gestion de permisos y seguridad**
--Tras las transferencias por WinSCP, se detecto que algunos archivos no pertenecian al usuario constructor. Se ejecuto:
+- Tras las transferencias por WinSCP, se detecto que algunos archivos no pertenecian al usuario constructor. Se ejecuto:
     "chow -v lfs:lfs $LFS/sources?*" Esto garantiza que el usuario lfs tenga control total durante la fase de extraccion y compilacion en los capitulos siguientes
 
 **Problemas encontrados y soluciones**
--Incompatibilidad de versiones (Version Drift)
+- Incompatibilidad de versiones (Version Drift)
   Debido a que algunos comandos wget apuntaron a repositorios "latest", se descargaron versiones excesivamente modernas como GCC 15 y Binutils 2.45. Estas versiones son incompatibles con las instrucciones y parches específicos de la receta LFS 12.4.
   *Soulcion*: Realizamos una auditoría de versiones y una purga manual de todos los paquetes excedentes. Esto asegura que el compilador no intente enlazar librerías de versiones distintas, lo que garantiza la estabilidad de la cadena de herramientas.
 
--Latencia en descargas de archivos grandes vía Terminal
+- Latencia en descargas de archivos grandes vía Terminal
   La descarga directa en la máquina virtual para paquetes de gran volumen (GCC, Python, Glibc) presentaba tiempos de espera ineficientes y riesgos de desconexión.
   *Solucion*: Implementamos una estrategia de transferencia híbrida utilizando WinSCP. Descargamos los paquetes pesados en el sistema anfitrión y los transferimos por SFTP, asegurando la propiedad de los archivos mediante chown lfs:lfs para evitar conflictos de permisos posteriores.
 
