@@ -49,19 +49,19 @@ Comprobar que el sistema anfitrion cumpla con todos los requisitos para construi
 **Particiones del disco**
 - Utilice la herramienta fdisk para crear una nueva tabla de particiones y una particion primaria que ocupe todo el disco
 - Comandos utilizados: 
-* sudo fdisk /dev/sdb
-* n -> p -> Entern -> Enter -> w
+  sudo fdisk /dev/sdb
+  n -> p -> Entern -> Enter -> w
 - Luego de guardar los cammbios, verifica la particion mediante lsblk confirmando la creacion de /dev/sda1
 
 **Formateo y montaje del sistema de archivos**
 - Formatee la particion con ext4 utilizando:
-* sudo mkfs -v -t ext4 /dev/sda1
+  sudo mkfs -v -t ext4 /dev/sda1
 - Cree el punto de montaje y monte la particion:
-* sudo mkdir -pv /mnt/lfs
-* sudo mount -v -t ext4 /dev/sda1 /mnt/lfs
+  sudo mkdir -pv /mnt/lfs
+  sudo mount -v -t ext4 /dev/sda1 /mnt/lfs
 - El sistema mostro una advertencia relacionada con SELinux labels, la cual no afecta al proceso LFS
 Confirme el montaje ejecutando:
-* df -h | grep lfs
+  df -h | grep lfs
 
 ### 20 de Diciembre del 2025
 ### Avance: Reconstruccion del Host y Preparacion del entorno LFS 2.0
