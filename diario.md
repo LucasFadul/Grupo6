@@ -176,3 +176,33 @@ El objetivo de hoy fue terminar la cadena de herramientas temporal, aislar el si
 -Error en Util-linux: Fallo en configure por flag --static obsoleto y falta de sqlite3 para liblastlog2
   *Solucion*: Se desactivo la libreria conflictiva y se removio el flag incompatible en la configuracion
 
+### 23 de enero del 2026
+### Avance: Migracion a SSD, Glibc y utilerias base
+El objetivo de hoy fue instalar la libreria central del sistema (Glibc) aprovechando la migracion de hardware a SSD (reduciendo el tiempo de compilacion) y dejar listas las herramientas fundamentales de compresion y procesamiento de archivos
+
+**Libreria C (Glibc) y configuracion regional**
+- Instalacion exitosa de Glibc aplicando parches FHS
+- Configuracion de "Locales" (es_ES, en_EN), archivo nsswitch.conf y definicion de la zona horaria para Paraguay
+- Se ejecuto el test critico verificando al estabilidad del toolchain
+
+**Herramientas de archivos y compresion**
+- Compilacion e instalacion del set completo de compresion: Zlib, Bzip2 (con parche shared), Xz y Zstd
+- Instalacion de File (reconocimiento de archivos) y Readline (historial y navegacion en terminal)
+
+**Utilidades de desarrollo**
+- Intalacion de M4, BC y Flex
+- Creacion del enlace simbolico vital ln -sv flex /usr//bin/lex para compatibilidad futura con el kernel
+
+**Problemas y Soluciones**
+- Interrupcion por Suspencion: El host entro en suspencion durante el make check de Glibc
+  *Solucion*: Se remonto el entorno Chroot y se reanudaron las pruebas. Resultado: 1 fallo menor en threads (ignorable)
+
+- Falso positivo en instalacion Glibc: Error "script doesn't work if installing not as primary" al final del make install
+  *Solucion*: Se verifico manualmente /usr/lib/libc.so.8 el error era del script de testeo final, no de la instalacion
+
+- Error de sintaxis en BC: Fallo de compilacion flaseUL undeclared debido a la rigurosidad de GCC 15 (C23 standard)
+  *Solucion*: Se forzo el estandar antiguo en la configuracion mediante CC="gcc -std=c99" ./configure
+
+- Archivos de zona horarias faltantes: Error zic: Can't open pacificnew al configurar el reloj
+  *Solucion*: Se ignoró el error ya que esos archivos son obsoletos en IANA
+
