@@ -176,7 +176,7 @@ El objetivo de hoy fue terminar la cadena de herramientas temporal, aislar el si
 -Error en Util-linux: Fallo en configure por flag --static obsoleto y falta de sqlite3 para liblastlog2
   *Solucion*: Se desactivo la libreria conflictiva y se removio el flag incompatible en la configuracion
 
-### 23 de enero del 2026
+### 22 de enero del 2026
 ### Avance: Migracion a SSD, Glibc y utilerias base
 El objetivo de hoy fue instalar la libreria central del sistema (Glibc) aprovechando la migracion de hardware a SSD (reduciendo el tiempo de compilacion) y dejar listas las herramientas fundamentales de compresion y procesamiento de archivos
 
@@ -206,3 +206,38 @@ El objetivo de hoy fue instalar la libreria central del sistema (Glibc) aprovech
 - Archivos de zona horarias faltantes: Error zic: Can't open pacificnew al configurar el reloj
   *Solucion*: Se ignoró el error ya que esos archivos son obsoletos en IANA
 
+### 23 de enero del 2026
+### Avance: Diagnostico del capitulo 8, revision de fuentes y reset controlado 
+El objetivo incial del dia fue avanzar y cerrar el capitulo 8 del libro. Sin embargo, multiples errores acumulados durante intentos previos dejaron en envidencia inconsistencias estructurales en el sistema construido. La jornada termino con una decision critica: reinciar la construccion desde el capitulo 5, priorizando coherencia y reproducibilidad
+
+**Capitulo 8 y estado del sistema**
+- Se intento continuar con la instalacion de paquetes del capitulo 8, encontrando errores recurrentes en configuraciones y builds
+- GRUB 2.12 presento fallos de dependencias y comportamientos inconsistentes, especialmente luego de compilaciones paralelas y arboles de build contaminados
+- Se detectaron ejecuciones de make sobre paquetes cuyo configure habia fallado o sido interrumpido previamente
+- Se identifico mezcla de contextos entre host, chroot y permisos de usuarios, afectando la estabilidad general del entorno
+
+**Audutoria de fuentes LFS 12.4**
+- Se monto correctamente la particion LFS
+- Se verifico el contenido de /mnt/lfs/sources contra wget-list-systemd
+- Se validaron criptograficamente todas las fuentes mediante md5sum
+- Se descargaron los archivos faltantes y se confirmo la integridad total de las fuentes
+
+  *Resultado*:
+  - Todas las fuentes quedaron alineadas al LFS 12,4 (systemd)
+
+ **Dicision Tecnica: Reset del sistema construido**
+ - Tras confirmar que las fuentes eran correctas, se decidio no continuar forzando el capitulo 8
+ - Se realizo un reset controlado del sistema base para eliminar cualquier inconsistencia historica
+ - se conservaron unicamente la estructura minima de la particion LFS y el directorio /sources
+
+**Problemas y Soluciones**
+- Acumulacion de errores en capitulo 8 debido a builds interrumpidos y reintentos sobre arboles sucios
+  *Solucion*: Abandonar el estado actual del sistema y reiniciar desde el capitulo 5
+
+- Confusion entre estado real del  sistema y estado de las fuentes
+  *Solucion*: Auditoria completa de fuentes y verificacion criptografica previa a cualquier nueva compilacion
+
+**Estado actual**
+- Sistema LFS: limpio, sin toolchain ni sistema base instalado
+- Fuentes: 100% verificadas y completas (LFS 12.4)
+- Punto de reinicio: Capítulo 5 – Binutils Pass 1
