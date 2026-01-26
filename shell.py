@@ -58,7 +58,65 @@ def main():
                 # Lógica propia: no puedes usar os.system("pwd")
                 print(os.getcwd())
                 registrar_log(f"Comando ejecutado: pwd")
+
+            # Comando cd
+            elif comando == "cd":
+                try:
+                    # Si no hay argumentos, vamos a 'home'
+                    if not argumentos:
+                        ruta_destino = os.path.expanduser("~")
+                    else:
+                        # Tomamos el primer argumento (la ruta)
+                        ruta_destino = argumentos[0]
+                    
+                    # La syscall mágica para cambiar de directorio
+                    os.chdir(ruta_destino)
+                    registrar_log(f"Cambio de directorio a: {os.getcwd()}")
                 
+                except FileNotFoundError:
+                    mensaje = f"cd: No existe el directorio: {ruta_destino}"
+                    print(mensaje)
+                    registrar_log(mensaje, es_error=True)
+                except NotADirectoryError:
+                    mensaje = f"cd: {ruta_destino} no es un directorio"
+                    print(mensaje)
+                    registrar_log(mensaje, es_error=True)
+                except PermissionError:
+                    mensaje = f"cd: Permiso denegado: {ruta_destino}"
+                    print(mensaje)
+                    registrar_log(mensaje, es_error=True)
+            
+            # Comando ls
+            elif comando == "ls":
+                try:
+                    # Si no hay argumentos, listamos la ruta actual (.)
+                    # Si hay argumentos, intentamos listar la primera ruta que nos den
+                    ruta_a_listar = argumentos[0] if argumentos else "."
+                    
+                    # 1. Obtenemos todo
+                    contenido_total = os.listdir(ruta_a_listar)
+                    
+                    # 2. Filtramos: Solo nos quedamos con lo que NO empieza con "."
+                    contenido = [item for item in contenido_total if not item.startswith(".")]
+                    
+                    contenido.sort()
+                    
+                    for item in contenido:
+                        # Un pequeño toque: poner '/' al final si es una carpeta
+                        if os.path.isdir(os.path.join(ruta_a_listar, item)):
+                            print(f"{item}/", end="  ")
+                        else:
+                            print(item, end="  ")
+                    print() # Salto de línea al final
+                    
+                    registrar_log(f"Comando ejecutado: ls en {ruta_a_listar}")
+                
+                except Exception as e:
+                    mensaje = f"ls: {e}"
+                    print(mensaje)
+                    registrar_log(mensaje, es_error=True)
+
+            #Comando no implementado    
             else:
                 # Aquí irá la lógica para comandos externos y otros builtins
                 print(f"Comando '{comando}' no implementado aún.")
