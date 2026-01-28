@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 
-import os          # Para syscalls (chdir, listdir, fork, exec)... hablar con el kernel
-import sys         # Para stdin, stdout y argumentos... salir del programa y manejar lo que escribe el usuario
+import os          # Para syscalls (chdir, listdir, fork, exec)... hablar con el kernel        
 import datetime    
 
 # REGISTRO DE LOGS
@@ -55,18 +54,80 @@ def ls(args):
         registrar_log(f"Error en ls: {e}", es_error=True)
 
 def cp(args):
-    pass
+    if len(args) < 2:
+        print("cp: faltan operandos (origen y destino)")
+        return
+    
+    origen = args[0]
+    destino = args[1]
+    
+    # 1. Verificar que el origen existe
+    if not os.path.exists(origen):
+        print(f"cp: no se puede encontrar '{origen}': No existe el archivo")
+        return
+
+    # 2. Impedir copiar directorios (el cp básico no lo hace sin -r)
+    if os.path.isdir(origen):
+        print(f"cp: -r no especificado; omitiendo directorio '{origen}'")
+        return
+
+    try:
+        # 3. IMPLEMENTACIÓN MANUAL: Lectura y Escritura de buffers
+        # Usamos 'rb' (read binary) y 'wb' (write binary) ... sirve con cualquier archivo
+        with open(origen, 'rb') as f_origen:
+            contenido = f_origen.read() # Leemos todo el contenido a memoria
+            
+        with open(destino, 'wb') as f_destino:
+            f_destino.write(contenido) # Escribimos el contenido en el destino
+            
+        registrar_log(f"Copia manual exitosa: {origen} -> {destino}")
+    
+    except Exception as e:
+        print(f"cp: error al copiar: {e}")
+        registrar_log(f"Error en cp manual: {e}", es_error=True)
 
 def rm(args):
-    pass
+    if not args:
+        print("rm: falta un operando")
+        return
+
+    for nombre in args:
+        if os.path.exists(nombre):
+            try:
+                # Verificamos si es un archivo (os.remove no borra carpetas)
+                if os.path.isfile(nombre):
+                    os.remove(nombre)  # Esta es la syscall manual para archivos
+                    registrar_log(f"Archivo eliminado manualmente: {nombre}")
+                
+                # Si es una carpeta, usamos os.rmdir
+                elif os.path.isdir(nombre):
+                    os.rmdir(nombre)
+                    registrar_log(f"Directorio eliminado manualmente: {nombre}")
+            
+            except Exception as e:
+                print(f"rm: no se pudo borrar '{nombre}': {e}")
+                registrar_log(f"Error al borrar {nombre}: {e}", es_error=True)
+        else:
+            print(f"rm: no se puede borrar '{nombre}': No existe el archivo o el directorio")
 
 def mkdir(args):
-    pass
+    if not args:
+        print("mkdir: falta un operando")
+        return
+    
+    for nombre in args:
+        try:
+            os.mkdir(nombre)
+            registrar_log(f"Directorio creado: {nombre}")
+        except FileExistsError:
+            print(f"mkdir: no se puede crear el directorio '{nombre}': El archivo ya existe")
+        except FileNotFoundError:
+            print(f"mkdir: no se puede crear el directorio '{nombre}': No existe el fichero o el directorio")
+        except Exception as e:
+            print(f"mkdir: error al crear '{nombre}': {e}")
+            registrar_log(f"Error en mkdir ({nombre}): {e}", es_error=True)
 
 def echo(args):
-    pass
-
-def cp(args):
     pass
 
 def cat(args):
@@ -104,6 +165,21 @@ def main():
             # ls
             elif comando == "ls":
                 ls(argumentos)  
+            # cp
+            elif comando == "cp":
+                cp(argumentos)
+            # rm
+            elif comando == "rm":
+                rm(argumentos)
+            # mkdir
+            elif comando == "mkdir":
+                mkdir(argumentos)
+            # echo
+            elif comando == "echo":
+                echo(argumentos)
+            # cat
+            elif comando == "cat":
+                cat(argumentos)
             
             else:
                 print(f"Comando '{comando}' no implementado aún.")
