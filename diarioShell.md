@@ -18,4 +18,10 @@ Fecha: 28/01/2026
 
 - Se crearon las funciones de los comandos cp, rm y mkdir.
 
+Fecha: 29/01/2026
 
+- Se crearon las funciones de los comandos echo y cat.
+
+- echo: unimos la lista de argumentos que se habia creado en el main con " ".join().
+
+- cat: hacemos un for de los argumentos ingresados. Verificamos si existe, si es un directorio y luego hacemos print del archivo linea por linea.
