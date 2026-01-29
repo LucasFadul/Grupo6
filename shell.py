@@ -1,7 +1,8 @@
 #!/usr/bin/env python3
 
 import os          # Para syscalls (chdir, listdir, fork, exec)... hablar con el kernel        
-import datetime    
+import datetime 
+import readline   
 
 # REGISTRO DE LOGS
 LOG_DIR = "/var/log/shell" 
@@ -128,11 +129,45 @@ def mkdir(args):
             registrar_log(f"Error en mkdir ({nombre}): {e}", es_error=True)
 
 def echo(args):
-    pass
+    resultado = " ".join(args)
+    print(resultado)
+    registrar_log(f"Comando echo ejecutado: {resultado}")   
 
 def cat(args):
-    pass
+    if not args:
+        print("cat: falta un nombre de archivo")
+        registrar_log("ERROR cat: no se proporcionó archivo", es_error=True)
+        return
+    
+    for nombre in args:
+        # Verifica existencia
+        if not os.path.exists(nombre):
+            print(f"cat: {nombre}: No existe el archivo")
+            registrar_log(f"ERROR cat: {nombre} no existe", es_error=True)
+            continue
+            
+        # Verifica que no sea un directorio
+        if os.path.isdir(nombre):
+            print(f"cat: {nombre}: Es un directorio")
+            registrar_log(f"ERROR cat: {nombre} es directorio", es_error=True)
+            continue
 
+        try:
+            with open(nombre, 'r') as archivo:
+                for linea in archivo:
+                    # Usamos end="" para que no se repita el salto de linea
+                    print(linea, end="")
+            
+            # Agregamos un salto de línea extra al final por si el archivo no termina en \n
+            print() 
+            registrar_log(f"Archivo visualizado: {nombre}")
+            
+        except Exception as e:
+            print(f"cat: error al leer {nombre}: {e}")
+            registrar_log(f"ERROR cat inesperado en {nombre}: {e}", es_error=True)
+
+def grep(args):
+    pass
 #-------------------------------------------------------------------------------------------
 
 def main():
@@ -180,7 +215,9 @@ def main():
             # cat
             elif comando == "cat":
                 cat(argumentos)
-            
+            # grep
+            elif comando == "grep":
+                grep(argumentos)
             else:
                 print(f"Comando '{comando}' no implementado aún.")
                 
