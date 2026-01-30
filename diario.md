@@ -314,3 +314,7 @@ Tras la decision de reiniciar la construccion desde el capitulo 5, se inicio una
 - Fuentes verificadas criptograficamente
 - Estructura LFS /mnt/lfs/{usr,etc,var,tools,sources} correcta
 - Usuario acutal lfs, listo para pasar al chroot
+
+### 28 de enero del 2026
+### Avance: Entrada al Chroot, identidad del sistema y herramientas internas (Capitulo 7)
+El objetivo del dia fue realizar el salto definitivo al entorno Chroot, estableciendo un sistema LFS funcional desde dentro de su propia particio. Se busco consolidar la identidad basica del sistema, crear su estructura estandar y compilar herramientas criticas ya no como entorno temporal, sino como parte del sistema en construccion
