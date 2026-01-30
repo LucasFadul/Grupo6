@@ -241,3 +241,76 @@ El objetivo incial del dia fue avanzar y cerrar el capitulo 8 del libro. Sin emb
 - Sistema LFS: limpio, sin toolchain ni sistema base instalado
 - Fuentes: 100% verificadas y completas (LFS 12.4)
 - Punto de reinicio: Capítulo 5 – Binutils Pass 1
+
+### 24 y 25 de enero del 2026
+### Avance: Reconstruccion completa del toolchain LFS (Capitulo 5 y 6)
+Tras la decision de reiniciar la construccion desde el capitulo 5, se inicio una reconstruccion completa y controlada del sistema LFS, priorizando coherenciam, aislamiento del host y validacion en cada etapa
+
+**Reinicio desde el capitulo 5 - Toolchain**
+- Se comenzo nuevamente desde Binutils Pass 1, siguiendo estrictamente el libro LFS 12.4 y evitando reutilizar elementos de intentos previos
+- Durante esta fase se establecieron correctamente las variables de entorno
+  - LFS=/mnt/lfs
+  - LFS_TGT=x86_64-lfs-linux-gnu
+  - PATH=/mnt/lfs/tools/bin:/usr/bin
+- Se verifico que:
+  - El compilador del host (/usr/bin/gcc) no interfiriera
+  - Todas las herramientas generadas apuntaran exclusivamente a /tools
+
+**Capitulo 5 - Construccion del toolchain inicial**
+- Se completaron exitosamente
+  - Binutils Pass 1
+  - GCC Pass 1
+  - Linux API Headers
+  - Glibc
+  - Libstdc++
+- Validaciones realizadas:
+  - ld y gcc usados pertenecen a /tools
+  - libc.so y ld-linux-x86-64.so.2 instalados en $LFS/usr/lib
+  - El compilador cruzado genera binarios correctamente
+- Se detectaron y corrigieron errores tipicos:
+  - Builds interrumpidos
+  - Falta de headers en el momento correcto
+  - Errores de permisos al instalar glibc
+
+**Capitulo 6 - Herramientas temporales**
+- Se instalaron correctamente todas las herramientas temporales requeridas por el libro
+  - m4
+  - ncurses
+  - bash
+  - coreutils
+  - diffutils
+  - file
+  - findutils
+  - gawk
+  - grep
+  - gzip
+  - make
+  - patch
+  - sed
+  - tar
+  - xz
+  - expect
+  - dejagnu
+  - perl
+  - python3
+  - texinfo (texi2any)
+  - gettext (xgettext)
+  - bison
+- Durante esta fase:
+  - Se detecto un error en en Expect 5.45.4 debido a la ausencia de pty_.c
+  - Se aplicó correctamente el parche expect-5.45.4-gcc15-1.patch, resolviendo el problema
+  - Se evitó reinstalar paquetes ya presentes (ej. ncurses), verificando antes con binarios en /tools/bin
+
+**Revision final del toolchain**
+- Se realizo una verificacion exhaustiva del entorno /tools
+  - Todos los binarios requeridos existen en /tools/bin
+  - Las versiones coinciden con las esperadas por LFS 12.4
+  - No hay dependencias faltantes
+  - No se detecto contaminacion del host
+
+**Estado actual del sistema**
+- Capitulo 5 y 6 completados correctamente
+- Toolchain temporal coherente, limpio y valido
+- Fuentes verificadas criptograficamente
+- Estructura LFS /mnt/lfs/{usr,etc,var,tools,sources} correcta
+- Usuario acutal lfs, listo para pasar al chroot
