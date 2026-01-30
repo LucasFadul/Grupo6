@@ -318,3 +318,17 @@ Tras la decision de reiniciar la construccion desde el capitulo 5, se inicio una
 ### 28 de enero del 2026
 ### Avance: Entrada al Chroot, identidad del sistema y herramientas internas (Capitulo 7)
 El objetivo del dia fue realizar el salto definitivo al entorno Chroot, estableciendo un sistema LFS funcional desde dentro de su propia particio. Se busco consolidar la identidad basica del sistema, crear su estructura estandar y compilar herramientas criticas ya no como entorno temporal, sino como parte del sistema en construccion
+
+**Entrada al Chroot y entorno del sistema**
+- Se abandono el usuario lfs y se tomo control total como root
+- Se montaron correctamente los pseudo-sistemas necesarios (/dev, /prooc. /sys, /run) mediante bind mounts
+- Se ejecuto exitosamente el comando chroot, pasando a operar completamente dentro de la particion LFS
+- El sistema paso a depender exclusivamente de sus propias herramientas y librerias
+
+**Estructura base e identidad del sistema**
+- Se creo la jerarquia estandar de directorios Linux (/bin, /etc, /usr, /var, /lib, /sbin, etc)
+- Se generaron los archivos fundamentales de identidad:
+  - /etc/passwd
+  - /etc/group
+- Se eliminarion los mensajes tipo "I have no name", confirmando identidad valida del usuario root
+- 
