@@ -366,3 +366,56 @@ El objetivo del dia fue realizar el salto definitivo al entorno Chroot, establec
 **Proximo objetivo**
 - Capitulo 8 - instaldacion del sistema base completo
 
+### 29 de enero del 2026
+### Avance: Capitulo 8 - Construccion del sistema base hasta Coreutils
+El objetivo del dia fue iniciar formalmente el capitulo 8 del libro LFS, comenzando la transicion desde un entorno chroot funcional hacia un sistema linux real, instalando los componentes fundamentales del userland. La jornada se centro en establecer las bases del sistema, las herramientas de compilacion definitivas y las utilidades esenciales de uso diario
+
+**Base del sistema**
+- Instalacion de Man-pages, proporcionando documentacion local para comandos y llamadas del sistemma
+- Instalacion de Iana-Etc, establecienddo la base de archivos de servicios y protocolos de red
+- Compilacion e instalacion de Glibc
+  - Se verifico la correcta instalacion del enlazador dinamico (/lib/ld-linux-x86--64.so.2)
+  - El sistema quedo habilitaddo para ejecutar binarios de manera autonoma
+- Instalacion de las librerias de compresion fundamentales
+  - Zlib
+  - Bzip2
+  - XZ
+  - Zstd
+  Estas librerias son criticas para el manejo de archivos comprimidos utilizados por multiples paquetes posteriores
+
+**Herramientas esenciales de compilacion**
+- Instalacion de File, para identificacion confiable de tipos de archivos
+- Instalacion de Readline, habilitando edicion interactiva e historial en la terminal
+- Instalacion de M4 y BC, herramientas utilizadas por sistemas de configuracion y build
+- Instalacion de Binutils, proveyendo ensamblador, enlazador y utilidades binarias
+- Instalacion de Flex y Bison, generadores lexicos y sintacticos requeridos por multiples proyectos del sistema
+
+**Compilador definitivo del sistema**
+- Compilacion e instalacion de GCC como compilador final
+- Se verifico que el compilador:
+  - Utiliza las librerias del sistema LFS
+  - Enlaza correctamente contra Glibc instalada
+- A partir de este punto, el sistema dejo de depender del compilador temporal del host
+
+**Herramientas criticas de soporte y testing**
+- Instalacion de Tcl, Expect y DejaGNU, habilitando la ejecucion de suites de pruebas
+- Instalacion de Pkgconf (pkg-config), permitiendo la correcta deteccion de dependencias entre paquetes
+- Instalacion de Ncurses, habilitando interfaces de texto avanzadas para aplicaciones en terminal
+- Intalacion de Sed, herramienta clave para edicion de flujo y parcheo durante la construccion
+
+**Infraestructura mooderna y utilidades basicas**
+- Instalacion del ecosistema completo de Python
+- Instalaciond de OpenSSL, proporcionando soporte criptografico
+- Instalacion de Meson y Ninja, sistemas modernos de construccion
+- Instalacion de Coreutils, incorporando los comandos esenciales del sistema (ls, cp, mv, rm, chmod, etc)
+
+**Estado actual**
+- Capitulo 8 iniciado correctamente
+- Sistema base funcional dentro de chroot
+- Toolchain definitivo operativo
+- Userland esencial instalado hasta Coreutils
+- El sistema es capaz de compilar, ejecutar y gestionar software sin dependencia del host
+
+**Proximo objetivo**
+- Continuar el capitulo 8 con las utilidades restantes y avanzar hacia la preparacion del Kernel
+
