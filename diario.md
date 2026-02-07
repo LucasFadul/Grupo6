@@ -419,3 +419,60 @@ El objetivo del dia fue iniciar formalmente el capitulo 8 del libro LFS, comenza
 **Proximo objetivo**
 - Continuar el capitulo 8 con las utilidades restantes y avanzar hacia la preparacion del Kernel
 
+### 30 de enero del 2026
+### Avance: Capítulos 8 (desde Coreutils hasta el final), 9, 10 y 11 – Sistema completo, Kernel, GRUB y primer boot exitoso
+El objetivo del día fue cerrar completamente la construcción del sistema LFS, finalizando el Capítulo 8 (desde Coreutils hasta su cierre), realizando la configuración del sistema (Cap. 9), preparando el arranque (Cap. 10) y ejecutando la etapa final (Cap. 11) hasta lograr un arranque real del sistema con login funcional. La jornada incluyó un incidente crítico con GRUB que obligó a una recuperación completa del sistema anfitrión, dejando una lección fuerte sobre bootloaders y coexistencia de sistemas.
+
+**Capítulo 8 – Construcción del sistema base (desde Coreutils hasta el cierre**
+- Finalización del userland esencial
+  - Continuación del sistema base posterior a Coreutils, incorporando herramientas restantes necesarias para un Linux usable y administrable
+  - Instalacion de utilidades de sistema y mantenimiento:
+    - Herramientas de procesos, administración, y utilidades de bajo nivel (suite base para operar y depurar el sistema).
+    - Herramientas de archivos y manipulación de texto, completando el conjunto estándar de comandos
+  - Instalacion de utilidades de red y diagnostico:
+    - Componentes para manejo de interfaces, rutas y verificación de conectividad
+  - Instalacion de herramientas de sistema y libreiras faltantes para completar dependencias del entorno final
+- Usuarios, permisos y seguridad del sistema
+  - Incorporacion y verificacion del init y componentes necesarios para el arranque tradicional del sistema (entorno no dependiente del host)
+  - Ajustes de estructura del sistema y archivos criticos para el funcionamiento cotidiano
+- Soporte de arranque e inicializacion dentro del sistema
+  - Instalacion y verificacion del init y componentes necesarios para el arranque tradicional del sistema (entorno no dependiente del host)
+  - Consolidacion del sistema para funcionar de forma autonoma (ya no como "entorno de build")
+- Cierre del capitulo 8
+  - Limpieza final del sistema
+  - Validacion de que el sistema construido contiene lo necesario para continuar con configuracion, kernel y boot
+
+**Capitulo 9 - Configuracion del sistema**
+- Dispositivos, red y persistencia
+  - Configuracion de reglas de Udev para nombres persistentes de interfaces de red
+  - Confimacion del nombre de interfaz:
+    - enp0s3
+  - Ajustes para evitar conflictos de nombres alternativos y asegurar consistencia en el arranque
+- Identidad del sistema
+  - Definicion del hostname final del sistema:
+    - lfs-SO1
+  - Teclado, consola e idioma
+    - Configuracion del teclado US internacional manteniendo caracteres especiales y acentos
+    - Configuracion de la consola:
+      - /etc/sysconfig/console usando us-acentos
+    - Configuracion regional y locales:
+      - Locale configurado en UTF-8 para entorno en español
+      - Creacion de /etc/profile para exportacion corrrecta de LANG
+    - Archivos base de interaccion
+      - Creación de archivos necesarios para uso cómodo del sistema:
+        - /etc/inputrc (Readline)
+        - /etc/shells (shells válidas del sistema)
+
+**Capitulo 10 - Preparacion del arranque (Kernel + fstab + GRUB)**
+- Tbala de montajes
+  - Creacion y ajuste de /etc/fstab con:
+    - raíz en la partición LFS
+    - montajes virtuales requeridos: /proc, /sys, /run, /dev, /dev/shm
+    - cgroup2 habilitado
+ - Kernel Linux 6.16.1
+   - Compilacion completa del kernel con configuracion minima funcional para VM
+   - Generacion del kernel final:
+     - /boot/vmlinuz-6.16.1-lfs-12.4
+   - Instalacion de modulos:
+     - /lib/modules/6.16.1
+   - Verificacion de que el kernel, modulos y estructura de boot quedaron presentes
