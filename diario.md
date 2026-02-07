@@ -19,7 +19,7 @@ Hoy trabaje para dejar preparado el entorno base para el LFS
 **Proximos pasos**
 - Corregir el deteccion de "Id"
 - Reejutar el script hasta que todas las herramientas aparezcan como instaladas
-- Luego continualr con la creacion de usuario LFS
+- Luego continuar con la creacion de usuario LFS
 
 
 ### 24 de Octube del 2025
@@ -476,3 +476,34 @@ El objetivo del día fue cerrar completamente la construcción del sistema LFS, 
    - Instalacion de modulos:
      - /lib/modules/6.16.1
    - Verificacion de que el kernel, modulos y estructura de boot quedaron presentes
+
+ **Incidente critico: GRUB afectado al sistema anfitrion**
+ - Fallo
+   - La instalacion de GRUB desde el entorno de LFS sobreescribio el cargador de arranque del disco, causando:
+     - Desaparicion del arranque normal de Rocky Linux
+     - Entrada a prompt de GRUB (grub>) con errores de detección de disco/partición
+   - Resultado inmediato:
+     - El host quedo sin menu funcional y sin arranque directo al sistema principal
+   - Recuperacion:
+     - Uso del ISO de Rocky Linux como medio de recuperacion:
+       - Arranque en modo Rescue
+       - Montaje del sistema real en /mnt/sysimage
+       - chroot al sistema anfitrion
+       - Reinstalacion y regeneracion de GRUB del host
+     - Restauracion del menu del host y vuelta del arranque normal
+   - Solucion final
+     - Agregado correcto de entrada para LFS dentro del GRUB del host.
+
+**Capitulo 11 - Finalizacion y primer arranque real**
+- Validacion final de archivos criticos
+  - int
+  - inittab
+  - fstab
+  - kernel y modulos
+- Revision de consistencia del arranque y estructura del sistema
+- Arranque exitoso del sistema LFS finalizado:
+  - Aparicion del prompt esperado
+    - lfs-SO1 login:
+
+
+  
