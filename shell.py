@@ -167,7 +167,63 @@ def cat(args):
             registrar_log(f"ERROR cat inesperado en {nombre}: {e}", es_error=True)
 
 def grep(args):
-    pass
+    # grep necesita al menos 2 argumentos: la palabra y el archivo
+    if len(args) < 2:
+        print("grep: uso: grep <palabra> <archivo>")
+        registrar_log("ERROR grep: faltan argumentos", es_error=True)
+        return
+    
+    palabra_buscada = args[0]
+    archivos = args[1:] # Pueden ser uno o varios archivos
+
+    for nombre in archivos:
+        if not os.path.exists(nombre):
+            print(f"grep: {nombre}: No existe el archivo")
+            continue
+            
+        if os.path.isdir(nombre):
+            print(f"grep: {nombre}: Es un directorio")
+            continue
+
+        try:
+            with open(nombre, 'r') as f:
+                # Leemos línea por línea para cumplir con la eficiencia de memoria
+                for n_linea, linea in enumerate(f, 1):
+                    if palabra_buscada in linea:
+                        # Si hay varios archivos, el grep real muestra el nombre
+                        prefijo = f"{nombre}:" if len(archivos) > 1 else ""
+                        # .strip() quita el salto de línea extra para que no se vea doble
+                        print(f"{prefijo}{linea.strip()}")
+            
+            registrar_log(f"Búsqueda grep '{palabra_buscada}' en {nombre}")
+            
+        except Exception as e:
+            print(f"grep: error al leer {nombre}: {e}")
+
+def help_cmd(args):
+    print("\n" + "="*60)
+    print(" " * 20 + "SOPORTE DE EDUSHELL")
+    print("="*60)
+    
+    comandos = {
+        "pwd":   "Muestra la ruta del directorio de trabajo actual",
+        "cd":    "Cambia el directorio actual. Si no se indica ruta, va a HOME",
+        "ls":    "Lista archivos del directorio omitiendo ocultos",
+        "cp":    "Copia archivos mediante flujo de bytes manual",
+        "rm":    "Elimina archivos (os.remove) o directorios vacíos (os.rmdir).",
+        "mkdir": "Crea un nuevo directorio (syscall pura os.mkdir).",
+        "echo":  "Imprime los argumentos proporcionados en la salida estándar.",
+        "cat":   "Muestra el contenido de archivos procesándolos línea por línea.",
+        "grep":  "Busca una cadena de texto dentro de archivos (filtro manual).",
+        "exit":  "Finaliza la sesión del EduShell y cierra el proceso actual.",
+    }
+
+    print("Comandos disponibles:")
+    for cmd, desc in comandos.items():
+        print(f"  \033[1;32m{cmd:10}\033[0m : {desc}")
+
+    print("="*60 + "\n")
+    registrar_log("Comando ejecutado: help")
 #-------------------------------------------------------------------------------------------
 
 def main():
@@ -218,8 +274,11 @@ def main():
             # grep
             elif comando == "grep":
                 grep(argumentos)
+            # help
+            elif comando == "help":
+                help_cmd(argumentos)
             else:
-                print(f"Comando '{comando}' no implementado aún.")
+                print(f"Comando '{comando}' no implementado.")
                 
         except EOFError: # Captura Ctrl+D
             break
