@@ -37,4 +37,6 @@ Fecha: 09/02/2026
 
 - Problema: comando "help" no contaba con ejemplos para casos epsecificos.
 
-Aplicamos la funciónalidad de explicar cada comando de manera especifica mediante help <comando>. Se añadieron los valores 'uso' y 'ejemplo' para cada llave para dar una explicación mas detallada del comando.
+- Solucion: Aplicamos la funciónalidad de explicar cada comando de manera especifica mediante help <comando>. Se añadieron los valores 'uso' y 'ejemplo' para cada llave para dar una explicación mas detallada del comando.
+
+- Implementacion del comando 'reto': lanza un desafío al azar para que el usuario practique el uso de los comandos.
