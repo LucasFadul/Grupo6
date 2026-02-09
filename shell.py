@@ -201,29 +201,88 @@ def grep(args):
             print(f"grep: error al leer {nombre}: {e}")
 
 def help_cmd(args):
-    print("\n" + "="*60)
-    print(" " * 20 + "SOPORTE DE EDUSHELL")
-    print("="*60)
-    
-    comandos = {
-        "pwd":   "Muestra la ruta del directorio de trabajo actual",
-        "cd":    "Cambia el directorio actual. Si no se indica ruta, va a HOME",
-        "ls":    "Lista archivos del directorio omitiendo ocultos",
-        "cp":    "Copia archivos mediante flujo de bytes manual",
-        "rm":    "Elimina archivos (os.remove) o directorios vacíos (os.rmdir).",
-        "mkdir": "Crea un nuevo directorio (syscall pura os.mkdir).",
-        "echo":  "Imprime los argumentos proporcionados en la salida estándar.",
-        "cat":   "Muestra el contenido de archivos procesándolos línea por línea.",
-        "grep":  "Busca una cadena de texto dentro de archivos (filtro manual).",
-        "exit":  "Finaliza la sesión del EduShell y cierra el proceso actual.",
+    # Diccionario extendido con información detallada
+    comandos_info = {
+    "pwd": {
+        "desc": "Muestra la ruta absoluta del directorio donde te encuentras (Print Working Directory).",
+        "uso": "pwd",
+        "ejemplo": "pwd"
+    },
+    "cd": {
+        "desc": "Cambia el directorio actual. Si no se especifica una ruta, te lleva a tu carpeta personal (HOME).",
+        "uso": "cd <ruta_o_directorio>",
+        "ejemplo": "cd Documentos/Proyectos"
+    },
+    "ls": {
+        "desc": "Lista los nombres de los archivos y carpetas en el directorio actual (excluye archivos ocultos).",
+        "uso": "ls",
+        "ejemplo": "ls"
+    },
+    "cp": {
+        "desc": "Copia el contenido de un archivo a un destino nuevo usando un flujo de bytes manual.",
+        "uso": "cp <archivo_origen> <archivo_destino>",
+        "ejemplo": "cp notas.txt notas_respaldo.txt"
+    },
+    "rm": {
+        "desc": "Elimina archivos o directorios vacíos permanentemente. ¡No hay papelera de reciclaje!",
+        "uso": "rm <nombre_archivo_o_carpeta>",
+        "ejemplo": "rm archivo_temporal.txt"
+    },
+    "mkdir": {
+        "desc": "Crea una nueva carpeta (directorio) en la ruta actual utilizando la llamada al sistema os.mkdir.",
+        "uso": "mkdir <nombre_de_carpeta>",
+        "ejemplo": "mkdir NuevaTarea"
+    },
+    "echo": {
+        "desc": "Imprime en la pantalla el texto o los argumentos que le proporciones.",
+        "uso": "echo <texto>",
+        "ejemplo": "echo 'Hola, este es mi EduShell'"
+    },
+    "cat": {
+        "desc": "Muestra el contenido de un archivo de texto procesándolo línea por línea en la terminal.",
+        "uso": "cat <nombre_archivo>",
+        "ejemplo": "cat tareas_pendientes.txt"
+    },
+    "grep": {
+        "desc": "Busca y muestra las líneas de un archivo que contienen una palabra o cadena de texto específica.",
+        "uso": "grep <texto_buscado> <archivo>",
+        "ejemplo": "grep 'IMPORTANTE' notas.txt"
+    },
+    "exit": {
+        "desc": "Finaliza la ejecución de EduShell y regresa a la terminal del sistema operativo.",
+        "uso": "exit",
+        "ejemplo": "exit"
+    }
     }
 
-    print("Comandos disponibles:")
-    for cmd, desc in comandos.items():
-        print(f"  \033[1;32m{cmd:10}\033[0m : {desc}")
+    # CASO 1: Ayuda específica (ej: help cp)
+    if len(args) > 0:
+        cmd_solicitado = args[0].lower()
+        
+        if cmd_solicitado in comandos_info:
+            info = comandos_info[cmd_solicitado]
+            print(f"\n\033[1;34m--- AYUDA DETALLADA: {cmd_solicitado.upper()} ---\033[0m")
+            print(f"📖 \033[1mDescripción:\033[0m {info['desc']}")
+            print(f"⚙️  \033[1mUso:\033[0m         {info['uso']}")
+            print(f"💡 \033[1mEjemplo:\033[0m     {info['ejemplo']}")
+            print("-" * 40 + "\n")
+        else:
+            print(f"\n El comando '{cmd_solicitado}' no existe en EduShell.")
+            print("Escribe 'help' sin argumentos para ver la lista.\n")
 
-    print("="*60 + "\n")
-    registrar_log("Comando ejecutado: help")
+    # CASO 2: Ayuda general (solo escribieron 'help')
+    else:
+        print("\n" + "="*60)
+        print(" " * 20 + "SOPORTE DE EDUSHELL")
+        print("="*60)
+        print("Comandos disponibles (usa 'help <comando>' para más detalle):")
+        
+        for cmd, data in comandos_info.items():
+            print(f"  \033[1;32m{cmd:10}\033[0m : {data['desc']}")
+        
+        print("="*60 + "\n")
+
+    registrar_log(f"Ayuda consultada para: {' '.join(args) if args else 'general'}")
 #-------------------------------------------------------------------------------------------
 
 def main():
