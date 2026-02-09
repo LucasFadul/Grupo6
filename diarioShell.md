@@ -25,3 +25,12 @@ Fecha: 29/01/2026
 - echo: unimos la lista de argumentos que se habia creado en el main con " ".join().
 
 - cat: hacemos un for de los argumentos ingresados. Verificamos si existe, si es un directorio y luego hacemos print del archivo linea por linea.
+
+
+Fecha: 09/02/2026
+
+- Se crearon las funciones de los comandos grep y help.
+
+- grep: el programa lee una linea a la vez hasta encontrar la palabra deseada, en caso de buscar en mas de un archivo se guarda el nombre del archivo en 'prefijo' y se imprime el nombre del archivo con la linea en la que se encuantra la palabra.
+
+- help: muestra una lista de todos los comandos que programamos y explica para qué sirve cada uno. El programa recorre el diccionario mediante un bucle for, imprimiendo cada par comando-explicación de manera organizada.
