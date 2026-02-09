@@ -3,6 +3,7 @@
 import os          # Para syscalls (chdir, listdir, fork, exec)... hablar con el kernel        
 import datetime 
 import readline   
+import random
 
 # REGISTRO DE LOGS
 LOG_DIR = "/var/log/shell" 
@@ -283,6 +284,54 @@ def help_cmd(args):
         print("="*60 + "\n")
 
     registrar_log(f"Ayuda consultada para: {' '.join(args) if args else 'general'}")
+
+def reto(args):
+    lista_retos = [
+        {
+            "titulo": "Explorador de Archivos",
+            "tarea": "Crea una carpeta llamada 'lab1', entra en ella y crea un archivo 'hola.txt' usando el comando echo.",
+            "pista": "Usa: mkdir, cd y luego echo 'texto' > hola.txt"
+        },
+        {
+            "titulo": "El Detective de Texto",
+            "tarea": "Busca la palabra 'ERROR' en un archivo que crees previamente.",
+            "pista": "Usa el comando 'grep' que implementamos. Recuerda que grep busca dentro de archivos."
+        },
+        {
+            "titulo": "Maestro de Limpieza",
+            "tarea": "Borra un archivo que no necesites y verifica que la carpeta quedó vacía.",
+            "pista": "Usa: rm para borrar y ls para verificar."
+        },
+        {
+            "titulo": "Arquitecto de Rutas",
+            "tarea": "Crea una estructura de carpetas anidada: 'clase/so/practica1'.",
+            "pista": "Deberas usar 'mkdir' tres veces o crear una por una entrando en ellas con 'cd'.",
+        },
+        {
+            "titulo": "El Informante",
+            "tarea": "Crea un archivo llamado 'info.txt' que contenga tu nombre y muestralo por pantalla.",
+            "pista": "Usa 'echo' con redireccion '>' para crearlo y luego el comando 'cat' para leerlo.",
+        },
+        {
+            "titulo": "Copia de Seguridad",
+            "tarea": "Haz una copia del archivo 'info.txt' llamada 'info_backup.txt'.",
+            "pista": "Utiliza el comando 'cp' seguido del archivo origen y el nombre del destino.",
+        },
+        {
+            "titulo": "Filtro de Contenido",
+            "tarea": "Crea un archivo 'lista.txt' con 3 nombres de frutas y usa grep para encontrar solo 'Manzana'.",
+            "pista": "Escribe las frutas con 'echo' y luego ejecuta: grep Manzana lista.txt",
+        }
+    ]
+
+
+    reto = random.choice(lista_retos)
+    
+    print("\n\033[1;35m🎯 ¡NUEVO DESAFÍO DETECTADO!\033[0m")
+    print(f"📌 RETO: {reto['titulo']}")
+    print(f"📝 TAREA: {reto['tarea']}")
+    print(f"💡 PISTA: {reto['pista']}")
+    print("-" * 30 + "\n")    
 #-------------------------------------------------------------------------------------------
 
 def main():
@@ -336,6 +385,8 @@ def main():
             # help
             elif comando == "help":
                 help_cmd(argumentos)
+            elif comando == "reto":
+                reto(argumentos)
             else:
                 print(f"Comando '{comando}' no implementado.")
                 
