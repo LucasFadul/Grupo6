@@ -505,27 +505,5 @@ El objetivo del día fue cerrar completamente la construcción del sistema LFS, 
   - Aparicion del prompt esperado
     - lfs-SO1 login:
 
-### 10 de febrero del 2026
-### Avance: Reconstruccion completa de LFS 12.4-systemd desde backup del Cap 7, cierre de Cap 8/9/10/11 y primer boot exitoso
-El dia de hoy se trato de rehacer el sistema con systemd partiendo del backup del cap 7, y dejar el sistema booteable con kernel + GRUB
-
-**Contexto y decision**
-- Detectamos que el LFS anterior estaba armado con SysVinit, pero el TP exige systemd como PID 1
-- Migrar el LFS ya hecho de SysVinit a systemd no es un cambio "parcheable" (cambia modelo de int/serviciosn unidades, herramientas y flujo de boot)
-- Decision: Usar el backup del cap 7 (el que el libro pide) y rehacer el cap 8 y lo restante con el libro 12.4 systemd
-
-**Reentrada al entorno LFS (volver ak chroot bien)**
-- Antes de continuar compilando, restauramos el entorno de trabajo en chroot con los montajes virtuales (dev/proc/sys/run) para evitar builds raros y errores de divice access
-- Entrada estandar al chroot:
-  chroot "$LFS" /usr/bin/env -i \
-  HOME=/root TERM="$TERM" \
-  PS1='(lfs chroot) \u:\w\$ ' \
-  PATH=/usr/bin:/usr/sbin \
-  /bin/bash --login
-source /etc/profile
-
-**Capítulo 8 (systemd) – cierre de paquetes + manejo de tests**
-- 
-
 
   
