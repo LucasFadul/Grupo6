@@ -505,5 +505,7 @@ El objetivo del día fue cerrar completamente la construcción del sistema LFS, 
   - Aparicion del prompt esperado
     - lfs-SO1 login:
 
+### 10 de febrero del 2026
+### Avance: 
 
   
