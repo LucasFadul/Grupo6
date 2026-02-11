@@ -249,6 +249,11 @@ def help_cmd(args):
         "uso": "grep <texto_buscado> <archivo>",
         "ejemplo": "grep 'IMPORTANTE' notas.txt"
     },
+    "reto": {
+        "desc": "Genera un desafío aleatorio para practicar tus habilidades en la terminal de forma interactiva.",
+        "uso": "reto",
+        "ejemplo": "reto"
+    },
     "exit": {
         "desc": "Finaliza la ejecución de EduShell y regresa a la terminal del sistema operativo.",
         "uso": "exit",
