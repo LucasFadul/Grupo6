@@ -671,7 +671,89 @@ menuentry "LFS 6.16.1" {
 - Despues de la correccion del tema del disco y confirmar GRUB/kernel
   - Booteamos desde GRUB y entramos al sistema
   - Aparecio el login: esperado del LFS
- 
+
+
+### 11 de Febrero del 2026
+### Avance: Configuracion de red para el LFS
+### Participante: Mateo
+Habilitar un servicio de red real en el LFS booteado: servidor SSH accesible desde otra máquina (Rocky host), con red automática al arranque, y usarlo para transferir e integrar código.
+
+**Compilación e instalación de OpenSSH (servidor)**
+- Problema
+  - LFS viene “mínimo” y no teníamos manera cómoda de entrar remotamente.
+- Qué hicimos
+  - Descargamos/descomprimimos openssh-9.8p1.
+  - Configuramos para que use /etc/ssh como directorio de configuración.
+  - Compilamos e instalamos.
+- Comandos principales (resumen)
+tar -xf openssh-9.8p1.tar.gz
+cd openssh-9.8p1
+./configure --prefix=/usr --sysconfdir=/etc/ssh
+make
+make install
+
+**Configuración de seguridad (usuario sshd + llaves + config)**
+- Problema
+  - sshd no inicia si no tiene un entorno seguro (usuario dedicado + llaves del host).
+- Qué hicimos
+  - Creamos grupo/usuario sshd con UID/GID 50.
+  - Generamos llaves del servidor (host keys) con ssh-keygen -A.
+  - Ajustamos /etc/ssh/sshd_config para permitir login de root (solo para el TP / entorno controlado).
+- Comandos principales (resumen)
+groupadd -g 50 sshd
+useradd  -c "sshd privsep" -d /var/lib/sshd -g sshd -s /bin/false -u 50 sshd
+
+mkdir -p /var/lib/sshd
+chmod 700 /var/lib/sshd
+
+ssh-keygen -A
+
+- Cambio clave en config
+  - En /etc/ssh/sshd_config:
+PermitRootLogin yes
+
+**Red con systemd**
+- Problema
+  - El servicio de red fallaba y sin red no había SSH.
+- Qué hicimos
+  - Creamos usuarios de sistema requeridos:
+    - systemd-network
+    - systemd-resolve
+  - Configuramos systemd-networkd con un .network para enp0s3.
+  - Habilitamos networkd y resolved.
+  - Arreglamos DNS enlazando /etc/resolv.conf a systemd.
+
+- Comandos / acciones (resumen)
+  - Archivo:
+/etc/systemd/network/10-static-enp0s3.network (o DHCP si usaron DHCP)
+  - Enable:
+systemctl enable systemd-networkd
+systemctl enable systemd-resolved
+  - DNS:
+ln -sfv /run/systemd/resolve/stub-resolv.conf /etc/resolv.conf
+
+**Habilitar y levantar el servicio SSH con systemd**
+- Qué hicimos
+  - Activamos el servicio para que arranque solo.
+  - Lo iniciamos y verificamos puerto abierto.
+- Comandos principales
+systemctl enable sshd
+systemctl start sshd
+systemctl status sshd --no-pager
+
+
+**Integración del script como comando del sistema (myshell)**
+- Objetivo
+  - Que el script pase a ser un “comando real” del sistema.
+- Qué hicimos
+  - Movimos el archivo a /usr/bin/myshell
+  - Agregamos shebang y permisos
+  - Probamos ejecución global
+- Comandos principales
+mv /root/shell.py /usr/bin/myshell
+chmod +x /usr/bin/myshell
+sed -i '1i #!/usr/bin/python3' /usr/bin/myshell
+myshell
 
 
 ### OBSERVACION:
