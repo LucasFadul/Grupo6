@@ -1,5 +1,6 @@
 ### 23 de Octubre del 2025
 ### Avance: Preparacion del entorno host 
+### Participante: Lucas
 Hoy trabaje para dejar preparado el entorno base para el LFS
 **Instalacion del sistema base:**
 - VitualBox configurado con Rocky Linux 10 minimal
@@ -24,6 +25,7 @@ Hoy trabaje para dejar preparado el entorno base para el LFS
 
 ### 24 de Octube del 2025
 ### Avance: Terminar el entorno del host
+### Participante: Lucas
 Comprobar que el sistema anfitrion cumpla con todos los requisitos para construir el entorno LFS
 **Cambios en el script y preparacion de entorno hostNo **
 - Tome la decicion de crear el script version-check.sh basado en el codigo del libro y no usar el anteriormente optimizado por la IA, este con el fin de verificar las versiones minimas de las herramientas criticas del sistema
@@ -41,6 +43,7 @@ Comprobar que el sistema anfitrion cumpla con todos los requisitos para construi
 
  ### 25 de Octubre del 2025
  ### Avance: Creacion de la particion y montaje del entorno LFS
+ ### Participante: Lucas
  Hoy continue con al preparacion del entorno del sistema anfitrion, siguiendo las indicaciones del CAP. 2.4 del libro LFS. EL objetivo fue crear y montar la particion donde se construira el sistema LFS
 **Creacion del nuevo disco**
 - Agregue un segundo disco virtual de 25 GB en VirtuaBox, con almacenamiento dinamico tipo VDI, para evitar ocupar espacio fisico innecesario en el host.
@@ -65,6 +68,7 @@ Confirme el montaje ejecutando:
 
 ### 20 de Diciembre del 2025
 ### Avance: Reconstruccion del Host y Preparacion del entorno LFS 2.0
+### PArticipante: Lucas
 Debido a una falla critica en la VM anterior, nos vimos en la necesidad de realizar el proyecto desde cero. Permitiendonos corregir el hardware para mayor eficiencia y aplicar la experencia previa para optimizar la instalacion del sistema anfitrion
 **Configuracion de Hardware**
 - Se instalo Rocky Linux 10.0 en una nueva VM de VirtualBox
@@ -90,6 +94,7 @@ Debido a una falla critica en la VM anterior, nos vimos en la necesidad de reali
 
 ### 21 de Diciembre del 2025
 ### Avance Obtencion de fuentes y parches
+### Participante: Mateo
 Se completo la descarga y verificacion de los aprox. 90 archivos (paquetes base y parche) requeridos por el manual LFS 12.4. Este dia nos centramos en optimizar las descargas y la depuracion del entorno para asegurar que la "materia prima" del sistema sea exacta y no presente corrupciones
 
 **Descargas y eficiencia aplicada**
@@ -115,6 +120,7 @@ Se completo la descarga y verificacion de los aprox. 90 archivos (paquetes base 
 
 ### 22 de Diciembre del 2025
 ### Avance: Vinculacion de entorno y preparacion para el cap 5
+### Participante: Lucas
 El dia de hoy buscamos dejar el terreno listo. El objetivo fue que la MV y el disco externo se entendieran bien para que el usuario lfs pueda trabajar tranquilo sin romper el sistema principal
 
 **El puente de /tools**
@@ -155,6 +161,7 @@ El objetivo de hoy fue llenar /usr/bin del nuevo sistema con las utilidades esen
 
 ### 21 de enero 2026
 ### Avance: Finalizacion del Toolchain, Chroot y herramientas criticas
+### Participante: Lucas
 El objetivo de hoy fue terminar la cadena de herramientas temporal, aislar el sistema dentro del entorno Chroot y dejar listas las utilidades de lenguaje para la construccion final
 
 **Aislamiento del sistema (toolchain)**
@@ -178,6 +185,7 @@ El objetivo de hoy fue terminar la cadena de herramientas temporal, aislar el si
 
 ### 22 de enero del 2026
 ### Avance: Migracion a SSD, Glibc y utilerias base
+### Participante: Mateo
 El objetivo de hoy fue instalar la libreria central del sistema (Glibc) aprovechando la migracion de hardware a SSD (reduciendo el tiempo de compilacion) y dejar listas las herramientas fundamentales de compresion y procesamiento de archivos
 
 **Libreria C (Glibc) y configuracion regional**
@@ -208,6 +216,7 @@ El objetivo de hoy fue instalar la libreria central del sistema (Glibc) aprovech
 
 ### 23 de enero del 2026
 ### Avance: Diagnostico del capitulo 8, revision de fuentes y reset controlado 
+### Participante: Mateo
 El objetivo incial del dia fue avanzar y cerrar el capitulo 8 del libro. Sin embargo, multiples errores acumulados durante intentos previos dejaron en envidencia inconsistencias estructurales en el sistema construido. La jornada termino con una decision critica: reinciar la construccion desde el capitulo 5, priorizando coherencia y reproducibilidad
 
 **Capitulo 8 y estado del sistema**
@@ -244,6 +253,7 @@ El objetivo incial del dia fue avanzar y cerrar el capitulo 8 del libro. Sin emb
 
 ### 24 y 25 de enero del 2026
 ### Avance: Reconstruccion completa del toolchain LFS (Capitulo 5 y 6)
+### Participante: Mateo
 Tras la decision de reiniciar la construccion desde el capitulo 5, se inicio una reconstruccion completa y controlada del sistema LFS, priorizando coherenciam, aislamiento del host y validacion en cada etapa
 
 **Reinicio desde el capitulo 5 - Toolchain**
@@ -317,6 +327,7 @@ Tras la decision de reiniciar la construccion desde el capitulo 5, se inicio una
 
 ### 28 de enero del 2026
 ### Avance: Entrada al Chroot, identidad del sistema y herramientas internas (Capitulo 7)
+### Participante: Mateo
 El objetivo del dia fue realizar el salto definitivo al entorno Chroot, estableciendo un sistema LFS funcional desde dentro de su propia particio. Se busco consolidar la identidad basica del sistema, crear su estructura estandar y compilar herramientas criticas ya no como entorno temporal, sino como parte del sistema en construccion
 
 **Entrada al Chroot y entorno del sistema**
@@ -421,6 +432,7 @@ El objetivo del dia fue iniciar formalmente el capitulo 8 del libro LFS, comenza
 
 ### 30 de enero del 2026
 ### Avance: Capítulos 8 (desde Coreutils hasta el final), 9, 10 y 11 – Sistema completo, Kernel, GRUB y primer boot exitoso
+### Participante: Mateo
 El objetivo del día fue cerrar completamente la construcción del sistema LFS, finalizando el Capítulo 8 (desde Coreutils hasta su cierre), realizando la configuración del sistema (Cap. 9), preparando el arranque (Cap. 10) y ejecutando la etapa final (Cap. 11) hasta lograr un arranque real del sistema con login funcional. La jornada incluyó un incidente crítico con GRUB que obligó a una recuperación completa del sistema anfitrión, dejando una lección fuerte sobre bootloaders y coexistencia de sistemas.
 
 **Capítulo 8 – Construcción del sistema base (desde Coreutils hasta el cierre**
@@ -504,6 +516,169 @@ El objetivo del día fue cerrar completamente la construcción del sistema LFS, 
 - Arranque exitoso del sistema LFS finalizado:
   - Aparicion del prompt esperado
     - lfs-SO1 login:
+
+### 10 de febrero del 2026
+### Avannce: Reconstruccion completa del LFS 12.4-systemd desde backup Cap.7 + Kernel/GRUB + primer boot exitoso
+### Participantes: Mateo
+El dia de hoy se trato de rehacer el sistema con systemd como PID, partiendo del backup del cap 7, y dejandolo booteable
+
+**Contexto y decision tecnica**
+- Detectamos que el LFS anterior quedo armado con SysVinit, pero el TP exige systemd
+- Migrar un LFS ya terminado de SysVinit -> systemd no es "parche", cambia el modelo de init/servicios, unidades, presents, dependencias y flujo de arranque
+- La decision fue volver al backup del cap 7 y rehacer desde ahi siguiendo la variante LFS 12.4-systemd hasta el boot final
+
+**Seguridad antes de tocar boot: snapshot de VirtualBox**
+- Antes de cambiar kernel/GRUB hicimos snapshot para poder volver atrás si rompíamos el arranque
+  - Intentamos usar VBoxManage desde dentro del Linux guest y dio “orden no encontrada” (porque VBoxManage está en el host donde está instalado VirtualBox, no dentro del guest).
+  - Solución: snapshot desde la GUI de VirtualBox (Instántaneas).
+
+**Volver al chroot correctamente (montajes + entorno limpio)**
+- Para compilar/instalar dentro de LFS desde el host Rocky, reentramos al chroot montando pseudo-filesystems. Esto es clave porque sin /dev/pts, /proc, /sys, /run, los builds y herramientas (sudo/pty, device nodes, etc.) se rompen o se comportan raro
+- Identificación de discos (punto crítico):
+  -  Usamos lsblk para no “adivinar”:
+    - sda (40G) = Rocky Linux (host del proyecto dentro de la VM) con LVM (rl-root, rl-swap)
+    - sdb (25G) = disco dedicado a LFS; sdb1 contiene LFS
+- Comando clave:
+  - lsblk -f / lsblk
+- Montaje del sistema LFS y pseudo-filesystem
+  - Pasos (en el host como Root):
+    - export LFS=/mnt/lfs
+    - mount -v /dev/sdb1 $LFS
+    - mount --bind /dev $LFS/dev
+    - mount --bind /dev/pts $LFS/dev/pts
+    - mount -t proc proc $LFS/proc
+    - mount -t sysfs sysfs $LFS/sys
+    - mount -t tmpfs tmpfs $LFS/run
+- Entrada al chroot
+  - Entramos con entorno limpio (env -i) y PATH mínimo:
+    chroot "$LFS" /usr/bin/env -i \
+    HOME=/root \
+    TERM="$TERM" \
+    PS1='(lfs chroot) \u:\w\$ ' \
+    PATH=/usr/bin:/usr/sbin \
+    /bin/bash --login
+  source /etc/profile
+ - Chequeos dentro del chroot:
+   - uname -a → muestra kernel del host (normal en chroot).
+   - echo $PATH
+   - ls / para ver la raíz de LFS.
+
+**Capítulo 8 – Construcción del sistema base (variante systemd)**
+- En esta reconstrucción, el Capítulo 8 fue muy similar al que ya habíamos hecho en la variante SysVinit: se compila e instala el userland base (toolchain final, utilidades, librerías y herramientas del sistema) siguiendo el mismo flujo general del libro.
+- Diferencias claves respecto a SysVinit:
+  - Se construyó e integró systemd como init del sistema (en vez de SysVinit), lo que cambia el modelo de arranque y servicios (unidades .service, .target, etc.).
+  - Se instalaron componentes necesarios para el ecosistema systemd (por ejemplo D-Bus y la generación/uso de machine-id, que systemd usa para identificación del sistema).
+  - En la etapa final se aplicaron presets de systemd (ej.: systemctl preset-all) para habilitar los servicios que el libro deja como defaults en un LFS mínimo.
+  - Varios make check/tests tuvieron fallos puntuales (normal en chroot/VM). Se documentaron y se continuó, porque no bloqueaban el sistema base y el libro no exige 100% de passing en todos los paquetes.\
+- Resultado del cap 8:
+  - systemctl --version (ya dentro del chroot) mostrando la versión de systemd.
+  - ls -l /sbin/init mostrando que apunta a systemd (o /lib/systemd/systemd según layout).
+  - Un systemctl preset-all (si lo corriste) o una captura de ls -l /etc/systemd/system/*.wants/ mostrando enlaces creados.
+
+**Capítulo 9 – Configuración del sistema (variante systemd)**
+- En este capítulo dejamos el sistema listo para arrancar como un Linux real: identidad, consola/idioma, red básica y archivos de configuración esenciales. A diferencia del Cap. 8 (que es “instalar paquetes”), acá es donde el sistema empieza a tener comportamiento propio.
+- Introducción: qué logramos en esta etapa
+  - Definimos la identidad del sistema (hostname, hosts).
+  - Dejamos configurado el entorno de consola (teclado/fuente/locale).
+  - Dejamos la red preparada para que al boot el sistema pueda levantar interfaz (base mínima).
+  - Dejamos los archivos estándar que el sistema necesita para uso normal.
+- Identidad del sistema (hostname + hosts)
+  - Qué hicimos
+    - Definimos el hostname del LFS.
+    - Creamos /etc/hosts para resolver el propio nombre local.
+  - Comandos / archivos
+    - echo "lfs" > /etc/hostname (o el nombre que elegiste)
+    - Editar /etc/hosts (ejemplo típico):
+      - 127.0.0.1 localhost
+      - 127.0.1.1 <hostname>
+
+- Configuración de red (mínimo para systemd)
+  - En systemd, la red suele manejarse con systemd-networkd (o NetworkManager en escritorios, pero en LFS base se suele usar networkd).
+  - Qué hicimos / verificamos
+    - Identificamos el nombre real de la interfaz (ej. enp0s3 en VirtualBox).
+    - Dejamos lista la config mínima para que al boot la interfaz tenga IP (DHCP).
+
+- Configuración regional: locale, consola y teclado
+  - Qué hicimos
+    - Definimos variables regionales y de idioma.
+    - En systemd, en chroot no siempre podés usar localectl/timedatectl, así que se deja por archivos.
+  - Archivos típicos
+    - /etc/locale.conf (ej: LANG=en_US.UTF-8 o C.UTF-8)
+    - /etc/vconsole.conf (ej: KEYMAP=us y FONT=Lat2-Terminus16)
+- Archivos base de interacción del usuario
+  - Qué hicimos
+    - Creamos/ajustamos archivos estándar para consola y shells:
+      - /etc/inputrc
+      - /etc/profile
+      - /etc/shells
+
+**Cap. 10.1: Kernel 6.16.1 (configuración y compilación)**
+- En linux-6.16.1/:
+  - make defconfig
+  - make menuconfig
+- Mensaje sobre cgroups y systemd (lo que vimos)
+  - Apareció algo como:
+  - CPU controller ---> [CGROUP_SCHED]
+  - advertencia: Group scheduling for SCHED_RR/FIFO (RT_GROUP_SCHED) puede hacer que systemd falle en features.
+- Qué hicimos y por qué:
+  - Dejamos cgroups habilitado (systemd lo necesita).
+  - Desactivamos RT_GROUP_SCHED porque el propio libro avisa que puede causar malfunciones con systemd.
+
+- Opciones extra 64-bit (MSI / IRQ remap / x2APIC)
+  - El libro recomienda habilitar en este orden si aparecen:
+  - PCI_MSI
+  - IRQ_REMAP
+  - X86_X2APIC
+- Qué pasó: revisamos y ya estaban activadas en tu config (lo verificaste en menuconfig).
+
+- Guardar configuración
+  - Al salir de menuconfig aparece el cuadro para guardar:
+    - confirmamos guardado en .config
+
+**Bootloader (GRUB) + el error más crítico: disco equivocado / disco desconectado**
+- Confirmación de raíz LFS
+  - Revisamos:
+    - /etc/fstab (dentro del chroot)
+    - /dev/sdb1  /  ext4  defaults  1  1
+  - y verificamos discos con lsblk.
+- Instalación de GRUB y config manual
+  - Instalamos GRUB apuntando al disco donde está LFS:
+    - grub-install /dev/sdb
+  - Luego creamos grub.cfg manual:
+set default=0
+set timeout=5
+insmod part_gpt
+insmod ext2
+set root=(hd0,1)
+
+menuentry "LFS 6.16.1" {
+    linux /boot/vmlinuz-6.16.1-lfs-12.4-systemd root=/dev/sdb1 ro
+}
+
+- Incidente: VirtualBox storage y pérdida del disco LFS (25GB)
+  - En un momento, tocando “Almacenamiento” en VirtualBox:
+    - se desconectó (detach) el disco de 25GB (el de LFS).
+    - Resultado al boot: Kernel panic – unable to mount root fs (unknown-block...).
+  - Por qué pasó (explicación para el diario):
+    - el kernel intentó montar root=/dev/sdb1, pero el disco ya no estaba, o cambió el orden de discos → la raíz no existía con ese nombre.
+    - En VMs, /dev/sda y /dev/sdb pueden cambiar si cambiás puertos/orden.
+   - Cómo lo resolvimos:
+     - Re-adjuntamos el disco correcto (25GB) al controlador SATA.
+     - Verificamos de nuevo con lsblk que el disco y la partición estaban presentes.
+     - Volvimos a chroot para corregir/confirmar GRUB si era necesario.
+
+**Resultado final: boot Exitoso**
+- Despues de la correccion del tema del disco y confirmar GRUB/kernel
+  - Booteamos desde GRUB y entramos al sistema
+  - Aparecio el login: esperado del LFS
+ 
+
+
+### OBSERVACION:
+### Todos los anexos de envidencia del desarrollo del LFS estan la carpeta de envidencias
+
+
+
 
 
   
